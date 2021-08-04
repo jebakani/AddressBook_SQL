@@ -24,5 +24,17 @@ namespace AddressBookDataTest
             //assert
             Assert.AreEqual(expected, actual);
         }
+        //UC2-Editing the data in the record and checking the data
+        [TestMethod]
+        public void EditingTheRecordTest()
+        {
+            //assign 
+            int expected = 1;
+            //act
+            int actual = addressBookManager.EditContactDetail(5,"harry",7373377956);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }
