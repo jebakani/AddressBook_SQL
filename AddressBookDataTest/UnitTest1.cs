@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AddressBook_Sql;
+using System.Collections.Generic;
+
 namespace AddressBookDataTest
 {
     [TestClass]
@@ -35,7 +37,7 @@ namespace AddressBookDataTest
             //assert
             Assert.AreEqual(expected, actual);
         }
-        //UC2-Editing the data in the record and checking the data
+        //UC2-Deleting the data in the record and checking the data
         [TestMethod]
         public void DeletingTheRecordTest()
         {
@@ -45,6 +47,25 @@ namespace AddressBookDataTest
             int id = 8;
             //act
             int actual = addressBookManager.DeletetheRecord(id, name);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+        //UC2-Retriving the data in the record and checking the data
+        [TestMethod]
+        public void RetrivingTheRecordTest()
+        {
+            //assign 
+            string expected = "Stephan harry ";
+            string actual = "";
+            //assign state and city
+            string state = "Kerala";
+            string city = "madurai";
+            //act
+            List<ContactDetails> list = addressBookManager.RetriveData(state,city);
+            foreach(var l in list)
+            {
+                actual += "" + l.firstName + " ";
+            }
             //assert
             Assert.AreEqual(expected, actual);
         }
