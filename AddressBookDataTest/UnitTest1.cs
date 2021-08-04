@@ -104,6 +104,19 @@ namespace AddressBookDataTest
             //assert
             Assert.AreEqual(expected, actual);
         }
+        //UC9-Inserting the data into the record and checking the data
+        [TestMethod]
+        public void InsertionOfDuplicateRecordTest1()
+        {
+            //assign 
+            int expected = 1;
+            ContactDetails contactDetails = new ContactDetails();
+            contactDetails = addressBookManager.ReadData(contactDetails);
+            //act
+            int actual = addressBookManager.insertIntoTableDuplicate(contactDetails);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
 
     }
 }

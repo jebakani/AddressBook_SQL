@@ -197,18 +197,59 @@ namespace AddressBook_Sql
                 sqlConnection.Close();
             }
         }
+
+        public int insertIntoTableDuplicate(ContactDetails details)
+        {
+            using (sqlConnection)
+                try
+                {
+                    //passing query in terms of stored procedure
+                    SqlCommand sqlCommand = new SqlCommand("dbo.InsertIntoAddressBookWithName", sqlConnection);
+                    //passing command type as stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    //adding the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@firstName", details.firstName);
+                    sqlCommand.Parameters.AddWithValue("@lastName", details.lastName);
+                    sqlCommand.Parameters.AddWithValue("@address", details.address);
+                    sqlCommand.Parameters.AddWithValue("@city", details.city);
+                    sqlCommand.Parameters.AddWithValue("@state", details.state);
+                    sqlCommand.Parameters.AddWithValue("@zipCode", details.zipCode);
+                    sqlCommand.Parameters.AddWithValue("@phoneNumber", details.phoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@email", details.emailAddress);
+                    sqlCommand.Parameters.AddWithValue("@type", details.type);
+                    sqlCommand.Parameters.AddWithValue("@adsName", details.adrsBookName);
+                    int result = sqlCommand.ExecuteNonQuery();
+                    //if result is greater than 0 then record is inserted
+                    if (result > 0)
+                        return 1;
+                    else
+                        return 0;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
         //method to create data 
         public ContactDetails ReadData(ContactDetails contactDetails)
         {
-            contactDetails.firstName = "jerry";
-            contactDetails.lastName = "kevin";
-            contactDetails.address = "east street";
-            contactDetails.city = "chennai";
+            contactDetails.firstName = "tom";
+            contactDetails.lastName = "jerry";
+            contactDetails.address = "north street";
+            contactDetails.city = "madurai";
             contactDetails.state = "Tamil Nadu";
-            contactDetails.zipCode = 623546;
-            contactDetails.phoneNumber = 8654239564;
-            contactDetails.emailAddress = "jerryk@gamil.com";
+            contactDetails.zipCode = 625846;
+            contactDetails.phoneNumber = 86515529564;
+            contactDetails.emailAddress = "tommy@gamil.com";
+            contactDetails.type = "Profession";
+            contactDetails.adrsBookName = "TVS";
             return contactDetails;
         }
+
     }
 }
