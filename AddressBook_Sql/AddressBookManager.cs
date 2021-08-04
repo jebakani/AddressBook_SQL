@@ -77,6 +77,35 @@ namespace AddressBook_Sql
                     sqlConnection.Close();
                 }
         }
+        public int DeletetheRecord(int id, string firstName)
+        {
+            using (sqlConnection)
+                try
+                {
+                    //passing query in terms of stored procedure
+                    SqlCommand sqlCommand = new SqlCommand("dbo.DeleteRecord", sqlConnection);
+                    //passing command type as stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlConnection.Open();
+                    //adding the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@firstName", firstName);
+                    sqlCommand.Parameters.AddWithValue("@id", id);
+                    int result = sqlCommand.ExecuteNonQuery();
+                    //if result is greater than 0 then record is inserted
+                    if (result > 0)
+                        return 1;
+                    else
+                        return 0;
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+        }
         public ContactDetails ReadData(ContactDetails contactDetails)
         {
             contactDetails.firstName = "jerry";

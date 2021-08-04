@@ -35,6 +35,19 @@ namespace AddressBookDataTest
             //assert
             Assert.AreEqual(expected, actual);
         }
+        //UC2-Editing the data in the record and checking the data
+        [TestMethod]
+        public void DeletingTheRecordTest()
+        {
+            //assign 
+            int expected = 1;
+            string name = "jerry";
+            int id = 8;
+            //act
+            int actual = addressBookManager.DeletetheRecord(id, name);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
 
     }
 }
