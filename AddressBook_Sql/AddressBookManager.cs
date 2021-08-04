@@ -235,6 +235,39 @@ namespace AddressBook_Sql
                     sqlConnection.Close();
                 }
         }
+
+        public string CountByType(string procedure)
+        {
+            //passing the query
+            string Salary = "";
+            using (this.sqlConnection)
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand(procedure, sqlConnection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    //passing command type as stored procedur
+                    this.sqlConnection.Open();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    //if the query has row 
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            Salary += "" + reader[0] + " ";
+                        }
+                    }
+                    return Salary;
+                }
+                catch (Exception e)
+                {
+                    return e.Message;
+                }
+                finally
+                {
+                    this.sqlConnection.Close();
+                }
+        }
+    
         //method to create data 
         public ContactDetails ReadData(ContactDetails contactDetails)
         {

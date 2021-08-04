@@ -44,7 +44,7 @@ namespace AddressBookDataTest
             //assign 
             int expected = 1;
             string name = "jerry";
-            int id = 8;
+            int id = 7;
             //act
             int actual = addressBookManager.DeletetheRecord(id, name);
             //assert
@@ -115,6 +115,14 @@ namespace AddressBookDataTest
             //act
             int actual = addressBookManager.insertIntoTableDuplicate(contactDetails);
             //assert
+            Assert.AreEqual(expected, actual);
+        }
+        //UC10-Calculate the count of person by type
+        [TestMethod]
+        public void CountByTyeTest()
+        {
+            string expected = "2 3 2 ";
+            string actual = addressBookManager.CountByType("dbo.CountByType");
             Assert.AreEqual(expected, actual);
         }
 
