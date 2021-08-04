@@ -125,6 +125,49 @@ namespace AddressBookDataTest
             string actual = addressBookManager.CountByType("dbo.CountByType");
             Assert.AreEqual(expected, actual);
         }
+        //UC13-Retriving the data in the record and checking the data
+        [TestMethod]
+        public void RetrivingTheRecordTest2()
+        {
+            //assign 
+            string expected = "Stephan harry ";
+            string actual = "";
+            //assign state and city
+            string state = "Kerala";
+            string city = "madurai";
+            //act
+            List<ContactDetails> list = addressBookManager.RetriveData(state, city, "@state", "@city", "dbo.RetriveDataState1");
+            foreach (var l in list)
+            {
+                actual += "" + l.firstName + " ";
+            }
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+        //UC10-Calculate the count of person by type
+        [TestMethod]
+        public void CountByTyeTest1()
+        {
+            string expected = "2 2 1 ";
+            string actual = addressBookManager.CountByType("dbo.CountByType1");
+            Assert.AreEqual(expected, actual);
+        }
+        //UC8-Retriving record in sorted order
+        [TestMethod]
+        public void RetrivingTheSortedRecordTest1()
+        {
+            //assign 
+            string expected = "harry Jessi Stephan stuart ";
+            string actual = "";
+            //act
+            List<ContactDetails> list = addressBookManager.RetriveDataSorted("dbo.SortedOrder");
+            foreach (var l in list)
+            {
+                actual += "" + l.firstName + " ";
+            }
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
 
     }
 }
