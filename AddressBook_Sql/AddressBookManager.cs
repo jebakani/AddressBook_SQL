@@ -77,6 +77,7 @@ namespace AddressBook_Sql
                     sqlConnection.Close();
                 }
         }
+        //delete the  record
         public int DeletetheRecord(int id, string firstName)
         {
             using (sqlConnection)
@@ -106,15 +107,15 @@ namespace AddressBook_Sql
                     sqlConnection.Close();
                 }
         }
-        public List<ContactDetails> RetriveData(string state, string city)
+        public List<ContactDetails> RetriveData(string state, string city, string procedureName)
         {
-            
+
             //initialize the list to store the retrived data
             List<ContactDetails> detail = new List<ContactDetails>();
             try
-            {   
+            {
                 //passing query in terms of stored procedure
-                SqlCommand sqlCommand = new SqlCommand("dbo.RetriveData", sqlConnection);
+                SqlCommand sqlCommand = new SqlCommand(procedureName, sqlConnection);
                 //passing command type as stored procedure
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlConnection.Open();
@@ -127,7 +128,7 @@ namespace AddressBook_Sql
                     while (reader.Read())
                     {
                         ContactDetails contact = new ContactDetails();
-                        contact.personId= Convert.ToInt32(reader["personId"]);
+                        contact.personId = Convert.ToInt32(reader["personId"]);
                         contact.firstName = reader.GetString(1);
                         contact.lastName = reader.GetString(2);
                         contact.address = reader.GetString(3);
@@ -142,7 +143,52 @@ namespace AddressBook_Sql
                 reader.Close();
                 return detail;
             }
-            catch(Exception e)
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+
+        }
+        //method to retrive the sorted data
+        public List<ContactDetails> RetriveDataSorted( string procedureName)
+        {
+
+            //initialize the list to store the retrived data
+            List<ContactDetails> detail = new List<ContactDetails>();
+            try
+            {
+                //passing query in terms of stored procedure
+                SqlCommand sqlCommand = new SqlCommand(procedureName, sqlConnection);
+                //passing command type as stored procedure
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                sqlConnection.Open();
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                //if it has data
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ContactDetails contact = new ContactDetails();
+                        contact.personId = Convert.ToInt32(reader["personId"]);
+                        contact.firstName = reader.GetString(1);
+                        contact.lastName = reader.GetString(2);
+                        contact.address = reader.GetString(3);
+                        contact.city = reader.GetString(4);
+                        contact.state = reader.GetString(5);
+                        contact.zipCode = reader.GetInt64(6);
+                        contact.phoneNumber = reader.GetInt64(7);
+                        contact.emailAddress = reader.GetString(8);
+                        detail.Add(contact);
+                    }
+                }
+                reader.Close();
+                return detail;
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -151,6 +197,7 @@ namespace AddressBook_Sql
                 sqlConnection.Close();
             }
         }
+        //method to create data 
         public ContactDetails ReadData(ContactDetails contactDetails)
         {
             contactDetails.firstName = "jerry";
