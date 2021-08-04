@@ -107,7 +107,7 @@ namespace AddressBook_Sql
                     sqlConnection.Close();
                 }
         }
-        public List<ContactDetails> RetriveData(string state, string city, string procedureName)
+        public List<ContactDetails> RetriveData(string string1, string string2,string parameter1,string parameter2,  string procedureName)
         {
 
             //initialize the list to store the retrived data
@@ -119,8 +119,8 @@ namespace AddressBook_Sql
                 //passing command type as stored procedure
                 sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                 sqlConnection.Open();
-                sqlCommand.Parameters.AddWithValue("@city", city);
-                sqlCommand.Parameters.AddWithValue("@state", state);
+                sqlCommand.Parameters.AddWithValue(parameter1, string1);
+                sqlCommand.Parameters.AddWithValue(parameter2, string2);
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 //if it has data
                 if (reader.HasRows)

@@ -61,7 +61,7 @@ namespace AddressBookDataTest
             string state = "Kerala";
             string city = "madurai";
             //act
-            List<ContactDetails> list = addressBookManager.RetriveData(state,city,"dbo.RetriveData");
+            List<ContactDetails> list = addressBookManager.RetriveData(state,city, "@city", "@state", "dbo.RetriveData");
             foreach(var l in list)
             {
                 actual += "" + l.firstName + " ";
@@ -78,6 +78,25 @@ namespace AddressBookDataTest
             string actual = "";
             //act
             List<ContactDetails> list = addressBookManager.RetriveDataSorted("dbo.RetriveDataSorted");
+            foreach (var l in list)
+            {
+                actual += "" + l.firstName + " ";
+            }
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+        //UC9-Retriving the data in the record and checking the data
+        [TestMethod]
+        public void RetrivingTheRecordTestBasedOnType()
+        {
+            //assign 
+            string expected = "stuart Jessi ";
+            string actual = "";
+            //assign state and city
+            string type = "friend";
+            string addressBookaname = "TVS";
+            //act
+            List<ContactDetails> list = addressBookManager.RetriveData(type, addressBookaname,"@type", "@addressName", "dbo.RetriveDataType");
             foreach (var l in list)
             {
                 actual += "" + l.firstName + " ";
